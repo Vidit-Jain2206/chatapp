@@ -79,7 +79,7 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:3000/api/users/allusers?search=${search}`,
+        `/api/users/allusers?search=${search}`,
         config
       );
 
@@ -109,11 +109,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(
-        "http://localhost:3000/api/chats",
-        { userId },
-        config
-      );
+      const { data } = await axios.post("/api/chats", { userId }, config);
       if (
         !chats.find((c) => {
           return c._id === data._id;

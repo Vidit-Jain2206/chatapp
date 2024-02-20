@@ -22,7 +22,7 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
       const { data } = await axios.get(
-        "http://localhost:3000/api/chats",
+        "/api/chats",
 
         config
       );
