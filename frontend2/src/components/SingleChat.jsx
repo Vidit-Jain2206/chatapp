@@ -27,7 +27,7 @@ import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
 import { BsCameraVideoFill } from "react-icons/bs";
 
-const ENDPOINT = "https://chat-app-a6i2.onrender.com/";
+const ENDPOINT = "https://chat-app-a6i2.onrender.com";
 var socket, selectedChatCompare;
 
 // eslint-disable-next-line react/prop-types
