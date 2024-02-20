@@ -19,12 +19,13 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { selectedChatState, userState } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import UserListItem from "../userAvatar/UserListItem";
 import axios from "axios";
 
+// eslint-disable-next-line react/prop-types
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedChat, setSelectedChat] = useRecoilState(selectedChatState);

@@ -30,6 +30,7 @@ import { BsCameraVideoFill } from "react-icons/bs";
 const ENDPOINT = "http://localhost:3000";
 var socket, selectedChatCompare;
 
+// eslint-disable-next-line react/prop-types
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,6 +58,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     });
     socket.on("request video call", (item) => {
       if (user._id !== item._id) {
+        // eslint-disable-next-line no-restricted-globals
         if (confirm(`${item.username} Requests video call`)) {
           socket.emit("accept video call", { users: selectedChat.users });
         }

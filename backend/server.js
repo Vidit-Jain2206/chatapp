@@ -42,9 +42,9 @@ if (process.env.NODE_ENV === "production") {
 app.use(NotFound);
 app.use(ErrorHandler);
 
-const PORT = process.env.PORT;
-const server = app.listen(PORT, () => {
-  console.log(`Sever is running on ${PORT}`);
+const port = process.env.PORT;
+const server = app.listen(port, () => {
+  console.log(`Sever is running on ${port}`);
 });
 const io = new Server(server, {
   pingTimeout: 60000,

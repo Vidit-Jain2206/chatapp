@@ -7,6 +7,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { getSender } from "../config/ChatLogic";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
+// eslint-disable-next-line react/prop-types
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const [user] = useRecoilState(userState);
