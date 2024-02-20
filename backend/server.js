@@ -44,7 +44,7 @@ app.use(ErrorHandler);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {
-  console.log(`Sever is running on ${port}`);
+  console.log(`Sever is running on port ${port}`);
 });
 const io = new Server(server, {
   pingTimeout: 60000,
