@@ -25,7 +25,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
-// import { BsCameraVideoFill } from "react-icons/bs";
+import { BsCameraVideoFill } from "react-icons/bs";
 
 const ENDPOINT = "http://localhost:3000";
 var socket, selectedChatCompare;
@@ -55,13 +55,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setIsTyping(true);
       }
     });
-    // socket.on("request video call", (item) => {
-    //   if (user._id !== item._id) {
-    //     if (confirm(`${item.username} Requests video call`)) {
-    //       socket.emit("accept video call", { users: selectedChat.users });
-    //     }
-    //   }
-    // });
+    socket.on("request video call", (item) => {
+      if (user._id !== item._id) {
+        if (confirm(`${item.username} Requests video call`)) {
+          socket.emit("accept video call", { users: selectedChat.users });
+        }
+      }
+    });
     socket.on("stop typing", () => setIsTyping(false));
   }, [user]);
   const fetchMessages = async () => {
@@ -150,9 +150,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }, timerLength);
   };
 
-  // const handleVideoCall = () => {
-  //   socket.emit("start video call", { room: selectedChat._id, user });
-  // };
+  const handleVideoCall = () => {
+    socket.emit("start video call", { room: selectedChat._id, user });
+  };
 
   useEffect(() => {
     fetchMessages();
@@ -226,7 +226,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   alignItems={"center"}
                   gap={"1rem"}
                 >
-                  {/* <BsCameraVideoFill onClick={handleVideoCall} /> */}
+                  <BsCameraVideoFill onClick={handleVideoCall} />
                   <ProfilePopUp user={getSenderFull(user, selectedChat.users)}>
                     <BsEyeFill></BsEyeFill>
                   </ProfilePopUp>

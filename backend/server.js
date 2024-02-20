@@ -62,9 +62,9 @@ io.on("connection", (socket) => {
 
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
-  // socket.on("start video call", ({ room, user }) => {
-  //   socket.in(room).emit("request video call", user);
-  // });
+  socket.on("start video call", ({ room, user }) => {
+    socket.in(room).emit("request video call", user);
+  });
 
   socket.off("setup", (userData) => {
     console.log("USER disconnected");
