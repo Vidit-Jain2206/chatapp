@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -14,38 +14,42 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../recoil/atoms";
 
-const Signup = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [pic, setPic] = useState("");
   const toast = useToast();
   const [user, setUser] = useRecoilState(userState);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // const handleChange = useCallback(() => {}, []);
+
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    },
+    [formData]
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // You can handle form submission logic here
-    console.log(formData);
+    console.log("hello");
     setLoading(true);
-    if (!formData.username || !formData.email || !formData.password) {
+    if (!formData.email || !formData.password) {
       toast({
         title: "Please enter all the fields",
         status: "warning",
         duration: 4000,
         isClosable: true,
+        position: "bottom",
       });
       setLoading(false);
       return;
@@ -53,21 +57,23 @@ const Signup = () => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
 
-      const { data } = await axios.post(
-        "/api/users/signup",
-        { ...formData, pic },
+      const response = await axios.post(
+        "http://localhost:3001/api/users/login",
+        { ...formData },
         config
       );
+      const { data } = response;
+
+      setUser(response.data);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+      navigate("/chats");
       toast({
-        title: "New User Created Succesfully",
+        title: "Login Successfull",
         status: "success",
         duration: 4000,
         isClosable: true,
       });
-      setUser(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occured",
@@ -79,73 +85,9 @@ const Signup = () => {
       setLoading(false);
     }
   };
-
-  const postDetails = (pics) => {
-    console.log(pics);
-    setLoading(true);
-    if (pics === undefined) {
-      toast({
-        title: "Please select an image",
-        status: "warning",
-        duration: 4000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    if (
-      pics.type === "image/jpeg" ||
-      pics.type === "image/jpg" ||
-      pics.type === "image/png"
-    ) {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "dlpun2fmu");
-
-      fetch("https://api.cloudinary.com/v1_1/dlpun2fmu/image/upload", {
-        method: "POST",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-          setLoading(false);
-          console.log(data.url.toString());
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    } else {
-      toast({
-        title: "Please select an image of required type",
-        status: "warning",
-        duration: 4000,
-        isClosable: true,
-      });
-      setLoading(false);
-      return;
-    }
-  };
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel textColor={"black"}>Username</FormLabel>
-          <Input
-            _hover={{ border: "1px", borderColor: "black" }}
-            textColor={"black"}
-            border={"1px"}
-            borderColor={"black"}
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </FormControl>
         <FormControl mt={4}>
           <FormLabel textColor={"black"}>Email Address</FormLabel>
           <Input
@@ -154,10 +96,14 @@ const Signup = () => {
             border={"1px"}
             borderColor={"black"}
             type="email"
+            outline={"none"}
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
+            _selected={{
+              outline: "none",
+            }}
           />
         </FormControl>
         <FormControl mt={4}>
@@ -184,19 +130,7 @@ const Signup = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <FormControl id="pic" mt={4}>
-          <FormLabel textColor={"black"}>Upload your Picture</FormLabel>
-          <Input
-            border={"1px"}
-            borderColor={"black"}
-            _hover={{ border: "1px", borderColor: "black" }}
-            textColor={"black"}
-            type="file"
-            p={1.5}
-            accept="image/*"
-            onChange={(e) => postDetails(e.target.files[0])}
-          />
-        </FormControl>
+
         <Button
           className="gradient-button-text"
           mt={4}
@@ -210,11 +144,11 @@ const Signup = () => {
             borderImage: "linear-gradient(#e66465, #757edf) 1",
           }}
         >
-          Sign Up
+          Login
         </Button>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

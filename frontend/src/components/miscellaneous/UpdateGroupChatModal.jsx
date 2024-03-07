@@ -52,7 +52,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setLoading(true);
 
       const { data } = await axios.put(
-        `/api/chats/groupremove`,
+        `http://localhost:3001/api/chats/groupremove`,
         { chatId: selectedChat._id, userId: item._id },
         {
           headers: {
@@ -83,7 +83,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       setRenameLoading(true);
       const { data } = await axios.put(
-        `/api/chats/grouprename`,
+        `http://localhost:3001/api/chats/grouprename`,
         { chatId: selectedChat._id, chatName: groupChatName },
         {
           headers: {
@@ -123,7 +123,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
       const { data } = await axios.get(
-        `/api/users/allusers?search=${search}`,
+        `http://localhost:3001/api/users/allusers?search=${search}`,
         config
       );
 
@@ -164,7 +164,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `/api/chats/groupadd`,
+        `http://localhost:3001/api/chats/groupadd`,
         { chatId: selectedChat._id, userId: item._id },
         {
           headers: {

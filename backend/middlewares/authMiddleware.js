@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import { USERS } from "../models/user.js";
 
 export const authenticateJWT = async (req, res, next) => {
-  console.log("Cookies", req.cookies.access_token);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")

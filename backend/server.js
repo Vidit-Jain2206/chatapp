@@ -23,28 +23,27 @@ app.use("/api/messages", messageRouter);
 
 // --------------------------deployment------------------------------
 
-const __dirname1 = path.resolve();
+// const __dirname1 = path.resolve();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "/frontend2/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname1, "/frontend2/build")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname1, "frontend2", "build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  });
-}
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname1, "frontend2", "build", "index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running..");
+//   });
+// }
 
 // --------------------------deployment------------------------------
 
 app.use(NotFound);
 app.use(ErrorHandler);
 
-const port = process.env.PORT;
-const server = app.listen(port, () => {
-  console.log(`Sever is running on port ${port}`);
+const server = app.listen(3001, () => {
+  console.log(`Sever is running on port 3001`);
 });
 const io = new Server(server, {
   pingTimeout: 60000,
@@ -54,25 +53,23 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
   socket.on("setup", (userData) => {
+    socket.join(userData._id);
     socket.emit("connected");
   });
 
   socket.on("join chat", (room) => {
+    console.log("user joinded chat", room);
     socket.join(room);
   });
 
-  socket.on("new message", (newMessageReceived) => {
-    var chat = newMessageReceived.chatId;
-    if (!chat.users) {
-      return console.log("chat.users not defined");
-    }
+  socket.on("new message", (msg) => {
+    var chat = msg.chatId;
     chat.users.forEach((user) => {
-      if (user._id == newMessageReceived.sender._id) {
+      if (user._id == msg.sender._id) {
         return;
       }
-      socket.in(user._id).emit("message received", newMessageReceived);
+      socket.in(user._id).emit("message received", msg);
     });
   });
 

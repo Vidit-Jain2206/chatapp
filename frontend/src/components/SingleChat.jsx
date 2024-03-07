@@ -27,7 +27,7 @@ import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
 import { BsCameraVideoFill } from "react-icons/bs";
 
-const ENDPOINT = "https://chat-app-a6i2.onrender.com";
+const ENDPOINT = "http://localhost:3001";
 var socket, selectedChatCompare;
 
 // eslint-disable-next-line react/prop-types
@@ -79,7 +79,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       setLoading(true);
       const { data } = await axios.get(
-        `/api/messages/${selectedChat._id}`,
+        `http://localhost:3001/api/messages/${selectedChat._id}`,
         config
       );
 
@@ -111,13 +111,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/messages",
+          "http://localhost:3001/api/messages",
           {
             content: newMessage,
             chatId: selectedChat._id,
           },
           config
         );
+
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
@@ -163,21 +164,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket.on("message received", (msg) => {
+      console.log("received message1");
       if (!selectedChatCompare || selectedChatCompare._id !== msg.chatId._id) {
         //give notification
-        let filtered = notification.filter((notif) => {
-          return notif._id === msg._id;
-        });
-
-        if (filtered.length === 0) {
-          setNotification([msg, ...notification]);
-          setFetchAgain(!fetchAgain);
-        }
       } else {
+        console.log("received message2");
         setMessages([...messages, msg]);
       }
     });
   });
+
+  console.log(selectedChatCompare);
 
   return (
     <>
