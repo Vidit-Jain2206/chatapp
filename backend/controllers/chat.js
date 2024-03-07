@@ -5,7 +5,6 @@ export const accessChats = async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
-    console.log("UserId param not sent with request");
     return res.sendStatus(400);
   }
 
@@ -70,8 +69,6 @@ export const fetchChats = async (req, res) => {
 
 export const createGroupChat = async (req, res) => {
   let { users, chatName } = req.body;
-  console.log(users);
-  console.log(chatName);
   if (!users || !chatName) {
     try {
       throw new Error("Please enter all the fields");
@@ -87,7 +84,6 @@ export const createGroupChat = async (req, res) => {
       throw new Error("More than two users are required to form groupChat");
     } catch (error) {
       res.status(400);
-
       return res.json({ message: error.message });
     }
   }
