@@ -79,7 +79,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:3001/api/messages/${selectedChat._id}`,
+        `/api/messages/${selectedChat._id}`,
         config
       );
 
@@ -92,7 +92,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         title: "Error Occured",
         description: error.message,
         duration: 3000,
-        status: error,
+        status: "error",
         isClosable: true,
       });
     }
@@ -111,7 +111,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:3001/api/messages",
+          "/api/messages",
           {
             content: newMessage,
             chatId: selectedChat._id,
@@ -126,7 +126,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           title: "Error Occured",
           description: error.message,
           duration: 3000,
-          status: error,
+          status: "error",
           isClosable: true,
         });
       }
@@ -164,17 +164,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket.on("message received", (msg) => {
-      console.log("received message1");
       if (!selectedChatCompare || selectedChatCompare._id !== msg.chatId._id) {
         //give notification
       } else {
-        console.log("received message2");
         setMessages([...messages, msg]);
       }
     });
   });
-
-  console.log(selectedChatCompare);
 
   return (
     <>

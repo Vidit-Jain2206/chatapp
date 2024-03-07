@@ -52,7 +52,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setLoading(true);
 
       const { data } = await axios.put(
-        `http://localhost:3001/api/chats/groupremove`,
+        `/api/chats/groupremove`,
         { chatId: selectedChat._id, userId: item._id },
         {
           headers: {
@@ -83,7 +83,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       setRenameLoading(true);
       const { data } = await axios.put(
-        `http://localhost:3001/api/chats/grouprename`,
+        `/api/chats/grouprename`,
         { chatId: selectedChat._id, chatName: groupChatName },
         {
           headers: {
@@ -123,7 +123,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:3001/api/users/allusers?search=${search}`,
+        `/api/users/allusers?search=${search}`,
         config
       );
 
@@ -164,7 +164,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `http://localhost:3001/api/chats/groupadd`,
+        `/api/chats/groupadd`,
         { chatId: selectedChat._id, userId: item._id },
         {
           headers: {
@@ -262,7 +262,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 ></Input>
                 <Button
                   variant={"solid"}
-                  colorScheme="teal"
+                  // colorScheme="teal"
                   ml={1}
                   isLoading={renameLoading}
                   onClick={() => handleRename}
@@ -300,7 +300,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
           <ModalFooter>
             <Button
-              colorScheme="red"
+              // colorScheme="red"
               mr={3}
               onClick={() => handleRemoveUser(user)}
             >

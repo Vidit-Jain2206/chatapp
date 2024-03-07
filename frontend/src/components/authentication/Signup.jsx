@@ -37,8 +37,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can handle form submission logic here
-    console.log(formData);
+
     setLoading(true);
     if (!formData.username || !formData.email || !formData.password) {
       toast({
@@ -54,7 +53,7 @@ const Signup = () => {
       const config = { headers: { "Content-Type": "application/json" } };
 
       const { data } = await axios.post(
-        "http://localhost:3001/api/users/signup",
+        "/api/users/signup",
         { ...formData, pic },
         config
       );
@@ -81,7 +80,6 @@ const Signup = () => {
   };
 
   const postDetails = (pics) => {
-    console.log(pics);
     setLoading(true);
     if (pics === undefined) {
       toast({
@@ -111,10 +109,8 @@ const Signup = () => {
         .then((data) => {
           setPic(data.url.toString());
           setLoading(false);
-          console.log(data.url.toString());
         })
         .catch((err) => {
-          console.log(err);
           setLoading(false);
         });
     } else {

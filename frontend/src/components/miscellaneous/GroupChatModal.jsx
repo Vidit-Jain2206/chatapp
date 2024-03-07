@@ -51,10 +51,9 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:3001/api/users/allusers?search=${search}`,
+        `/api/users/allusers?search=${search}`,
         config
       );
-      console.log(data);
       setLoading(false);
       setSearchResults(data);
     } catch (error) {
@@ -100,7 +99,7 @@ const GroupChatModal = ({ children }) => {
     }
     try {
       const { data } = await axios.post(
-        `http://localhost:3001/api/chats/group`,
+        `/api/chats/group`,
         {
           chatName: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
@@ -111,7 +110,6 @@ const GroupChatModal = ({ children }) => {
           },
         }
       );
-      console.log(data);
       setChats([data, ...chats]);
       onClose();
       toast({
@@ -122,7 +120,6 @@ const GroupChatModal = ({ children }) => {
         position: "bottom-left",
       });
     } catch (error) {
-      console.log(error);
       toast({
         title: "Error Occured",
         description: error.response.data.message,
@@ -226,7 +223,10 @@ const GroupChatModal = ({ children }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" onClick={handleSubmit}>
+            <Button
+              // colorScheme="blue"
+              onClick={handleSubmit}
+            >
               Create Chat
             </Button>
           </ModalFooter>

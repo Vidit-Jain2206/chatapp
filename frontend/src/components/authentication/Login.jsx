@@ -40,8 +40,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can handle form submission logic here
-    console.log("hello");
+
     setLoading(true);
     if (!formData.email || !formData.password) {
       toast({
@@ -58,7 +57,7 @@ const Login = () => {
       const config = { headers: { "Content-Type": "application/json" } };
 
       const response = await axios.post(
-        "http://localhost:3001/api/users/login",
+        "/api/users/login",
         { ...formData },
         config
       );
