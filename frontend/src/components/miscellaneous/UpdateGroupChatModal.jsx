@@ -212,6 +212,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             <Box
               width={"100%"}
               display={"flex"}
+              flexDir={"column"}
               flexWrap={"wrap"}
               pb={3}
               gap={2}

@@ -131,6 +131,7 @@ const SideDrawer = () => {
       });
     }
   };
+  console.log(notification);
   return (
     <>
       <Box
@@ -178,25 +179,9 @@ const SideDrawer = () => {
                 }}
               >
                 {notification?.length > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      right: "0",
-                      height: "10%",
-                      width: "10%",
-                      borderRadius: "50%",
-                      backgroundColor: "#e66465",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "white",
-                      fontSize: "10px",
-                      transform: "translate(-50%, -50%)",
-                    }}
-                  >
+                  <Badge colorScheme="red" variant="solid" fontSize="xs">
                     {notification.length}
-                  </span>
+                  </Badge>
                 )}
               </BellIcon>
             </MenuButton>
