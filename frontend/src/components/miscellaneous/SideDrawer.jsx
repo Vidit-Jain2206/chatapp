@@ -172,11 +172,10 @@ const SideDrawer = () => {
         >
           <Menu>
             <MenuButton p={2}>
-              <IconButton
-                aria-label="Notification Bell"
-                icon={<BellIcon />}
-                size="lg"
-                position={"relative"}
+              <BellIcon
+                style={{
+                  position: "relative",
+                }}
               >
                 {notification?.length > 0 && (
                   <span
@@ -184,6 +183,8 @@ const SideDrawer = () => {
                       position: "absolute",
                       top: "0",
                       right: "0",
+                      height: "10%",
+                      width: "10%",
                       borderRadius: "50%",
                       backgroundColor: "#e66465",
                       display: "flex",
@@ -197,7 +198,7 @@ const SideDrawer = () => {
                     {notification.length}
                   </span>
                 )}
-              </IconButton>
+              </BellIcon>
             </MenuButton>
             {/* Menu notifications */}
             <MenuList pl={2}>
