@@ -160,7 +160,7 @@ const SideDrawer = () => {
         </Tooltip>
 
         <Text fontSize={"2xl"} fontFamily={"Work Sans"}>
-          TalK-A-Tive
+          TALKS
         </Text>
 
         <div

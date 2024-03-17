@@ -50,7 +50,7 @@ const Home = () => {
               fontSize={"2xl"}
               letterSpacing={"1px"}
             >
-              TALK - A - TIVE
+              TALKS
             </Text>
           </Box>
           <Box w="100%" bg="white" borderRadius="md" p={4} color="white">
