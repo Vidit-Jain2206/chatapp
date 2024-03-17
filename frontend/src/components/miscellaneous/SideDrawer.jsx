@@ -176,18 +176,26 @@ const SideDrawer = () => {
                 aria-label="Notification Bell"
                 icon={<BellIcon />}
                 size="lg"
+                position={"relative"}
               >
                 {notification?.length > 0 && (
-                  <Badge
-                    borderRadius="full"
-                    px={2}
-                    // colorScheme="red"
-                    position="absolute"
-                    top="0"
-                    right="0"
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      borderRadius: "50%",
+                      backgroundColor: "#e66465",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "white",
+                      fontSize: "10px",
+                      transform: "translate(-50%, -50%)",
+                    }}
                   >
                     {notification.length}
-                  </Badge>
+                  </span>
                 )}
               </IconButton>
             </MenuButton>
