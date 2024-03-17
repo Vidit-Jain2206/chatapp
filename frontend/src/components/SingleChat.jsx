@@ -166,6 +166,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("message received", (msg) => {
       if (!selectedChatCompare || selectedChatCompare._id !== msg.chatId._id) {
         //give notification
+        if (!notification.includes(msg)) {
+          setNotification([msg, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages([...messages, msg]);
       }
