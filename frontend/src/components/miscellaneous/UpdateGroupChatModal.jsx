@@ -50,7 +50,6 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     }
     try {
       setLoading(true);
-
       const { data } = await axios.put(
         `/api/chats/groupremove`,
         { chatId: selectedChat._id, userId: item._id },
@@ -141,6 +140,16 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     }
   };
   const addUsertoGroup = async (item) => {
+    if (selectedChat.groupAdmin._id !== user._id) {
+      toast({
+        title: "Only Admin can add user",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      return;
+    }
     if (selectedChat.users.find((u) => u._id === item._id)) {
       toast({
         title: "User is already in group",
@@ -151,16 +160,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       });
       return;
     }
-    if (selectedChat.groupAdmin._id === item._id) {
-      toast({
-        title: "Only Admin can add user",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-      return;
-    }
+
     try {
       setLoading(true);
       const { data } = await axios.put(
@@ -266,13 +266,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                   // colorScheme="teal"
                   ml={1}
                   isLoading={renameLoading}
-                  onClick={() => handleRename}
+                  onClick={handleRename}
                 >
                   Update
                 </Button>
               </FormControl>
               <FormControl>
-                {" "}
                 <Input
                   placeholder="Add users eg: Vidit, Abhi"
                   mb={1}
